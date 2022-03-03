@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<!-- ****************************** FORM VIEW **************************************** -->
+	<record id="view_postnl_picking_form" model="ir.ui.view">
+		<field name="name">view.postnl.picking.form</field>
+		<field name="model">stock.picking</field>
+		<field name="inherit_id" ref="stock.view_picking_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='action_toggle_is_locked']" position="after">
+				<button name="action_tracking_shipment" attrs="{'invisible': [('postnl_barcode', '=', False)]}"
+						string="Update postnl status" class="oe_highlight" type="object"/>
+			</xpath>
+			<xpath expr="//page[2]" position="after">
+				<!-- Adding additional page to manage postnl shipment info -->
+				<page string="Postnl shipment" attrs="{'invisible': [('postnl_barcode', '=', False)]}">
+					<group>
+						<group string="Postal general info">
+							<field name="postnl_barcode"/>
+							<field name="postnl_code"/>
+							<field name="postnl_description"/>
+						</group>
+						<group string="Postal tracking info">
+							<field name="postnl_shipping_status"/>
+							<field name="postnl_shipping_code"/>
+							<field name="postnl_shipping_message"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>
